@@ -26,7 +26,11 @@ def translate_text(text):
             {"role": "user", "content": text},
         ],
     )
-    return completion.choices[0].message.content
+    # 获取返回结果并处理空行
+    result = completion.choices[0].message.content
+    # 使用列表推导式过滤掉空行，然后重新用换行符连接
+    cleaned_result = '\n'.join([line for line in result.splitlines() if line.strip()])
+    return cleaned_result
 
 @app.route('/')
 def home():
