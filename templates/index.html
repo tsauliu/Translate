@@ -70,6 +70,16 @@
                 
                 if (response.ok) {
                     resultDiv.textContent = data.translation;
+                    // 使用 Clipboard API 复制文本
+                    try {
+                        await navigator.clipboard.writeText(data.translation);
+                        // 显示复制成功的提示
+                        const originalText = resultDiv.textContent;
+                        resultDiv.textContent = originalText + '\n\n(已复制到剪贴板)';
+                    } catch (clipboardError) {
+                        console.error('复制失败:', clipboardError);
+                        resultDiv.textContent = data.translation + '\n\n(复制到剪贴板失败，请手动复制)';
+                    }
                 } else {
                     resultDiv.innerHTML = `<span class="error">Error: ${data.error}</span>`;
                 }
