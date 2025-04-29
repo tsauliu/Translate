@@ -1,3 +1,4 @@
 env.py
 login.bat
 pyenv.sh
+__pycache__
