@@ -78,7 +78,7 @@
                     document.execCommand('copy');
                     document.body.removeChild(textArea);
                     // 显示复制成功提示
-                    resultDiv.textContent += '\n\n(已复制到剪贴板)';
+                    resultDiv.textContent += '\n\n(复制成功)';
                 } else {
                     resultDiv.innerHTML = `<span class="error">Error: ${data.error}</span>`;
                 }
