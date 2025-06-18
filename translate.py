@@ -1,7 +1,7 @@
 #%%
 import os
 from flask import Flask, render_template, request, jsonify
-from models import translate_text_gemini
+from models import translate_text_gemini, shorten_text_gemini
 
 app = Flask(__name__)
 
@@ -19,6 +19,18 @@ def translate():
         
         translated_text = translate_text_gemini(text)
         return jsonify({'translation': translated_text})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/shorten', methods=['POST'])
+def shorten():
+    try:
+        text = request.json['text']
+        if not text:
+            return jsonify({'error': 'Please enter some text to shorten'}), 400
+        
+        shortened_text = shorten_text_gemini(text)
+        return jsonify({'shortened_text': shortened_text})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

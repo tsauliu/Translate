@@ -2,6 +2,7 @@ from openai import OpenAI
 from env import api_key
 import os
 prompt_content = open('prompt.md', 'r', encoding='utf-8').read()
+shorten_prompt_content = open('shorten_prompt.md', 'r', encoding='utf-8').read()
 
 def translate_text_deepseek(text):
     client = OpenAI(
@@ -34,5 +35,17 @@ def translate_text_gemini(text):
         temperature=1
         ) , 
         contents=prompt_content+'\n -- \n'+text 
+    )
+    return response.text
+
+def shorten_text_gemini(text):
+    client = genai.Client(api_key=gemini_key)
+    modelname="gemini-2.5-flash-preview-05-20" 
+    response = client.models.generate_content(
+        model=modelname,
+        config=types.GenerateContentConfig(
+        temperature=1
+        ) ,  
+        contents=shorten_prompt_content+'\n -- \n'+text 
     )
     return response.text

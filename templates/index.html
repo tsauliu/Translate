@@ -124,10 +124,34 @@
 
             resultDiv.textContent = 'Shortening...';
             
-            // Placeholder for shorten functionality
-            setTimeout(() => {
-                resultDiv.textContent = 'This is where the shortened text will appear.';
-            }, 500);
+            try {
+                const response = await fetch('/shorten', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: inputText })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.textContent = data.shortened_text;
+                    // 使用传统方法复制文本
+                    const textArea = document.createElement('textarea');
+                    textArea.value = data.shortened_text;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    // 显示复制成功提示
+                    resultDiv.textContent += '\n\n(Copied to clipboard)';
+                } else {
+                    resultDiv.innerHTML = `<span class="error">Error: ${data.error}</span>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
         });
     </script>
 </body>
