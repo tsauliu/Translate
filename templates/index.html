@@ -6,9 +6,18 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 60px;
+        }
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         textarea {
             width: 100%;
@@ -24,10 +33,16 @@
             border: none;
             cursor: pointer;
         }
+        #shortenBtn {
+            background-color: #007BFF;
+        }
         button:hover {
             background-color: #45a049;
         }
-        #result {
+        #shortenBtn:hover {
+            background-color: #0056b3;
+        }
+        .result-box {
             margin-top: 20px;
             padding: 10px;
             border: 1px solid #ddd;
@@ -40,15 +55,26 @@
     </style>
 </head>
 <body>
-    <h1>Translation App</h1>
-    <textarea id="inputText" placeholder="Enter text to translate..."></textarea>
-    <button id="translateBtn">Translate</button>
-    <div id="result"></div>
+    <h1>Translation & Shorten App</h1>
+    <div class="container">
+        <div class="column">
+            <h2>Translate</h2>
+            <textarea id="translateInputText" placeholder="Enter text to translate..."></textarea>
+            <button id="translateBtn">Translate</button>
+            <div id="translateResult" class="result-box"></div>
+        </div>
+        <div class="column">
+            <h2>Shorten Text</h2>
+            <textarea id="shortenInputText" placeholder="Enter text to shorten..."></textarea>
+            <button id="shortenBtn">Shorten</button>
+            <div id="shortenResult" class="result-box"></div>
+        </div>
+    </div>
 
     <script>
         document.getElementById('translateBtn').addEventListener('click', async function() {
-            const inputText = document.getElementById('inputText').value;
-            const resultDiv = document.getElementById('result');
+            const inputText = document.getElementById('translateInputText').value;
+            const resultDiv = document.getElementById('translateResult');
             
             if (!inputText.trim()) {
                 resultDiv.innerHTML = '<span class="error">Please enter some text to translate</span>';
@@ -78,13 +104,30 @@
                     document.execCommand('copy');
                     document.body.removeChild(textArea);
                     // 显示复制成功提示
-                    resultDiv.textContent += '\n\n(复制成功)';
+                    resultDiv.textContent += '\n\n(Copied to clipboard)';
                 } else {
                     resultDiv.innerHTML = `<span class="error">Error: ${data.error}</span>`;
                 }
             } catch (error) {
                 resultDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
             }
+        });
+
+        document.getElementById('shortenBtn').addEventListener('click', async function() {
+            const inputText = document.getElementById('shortenInputText').value;
+            const resultDiv = document.getElementById('shortenResult');
+
+            if (!inputText.trim()) {
+                resultDiv.innerHTML = '<span class="error">Please enter some text to shorten</span>';
+                return;
+            }
+
+            resultDiv.textContent = 'Shortening...';
+            
+            // Placeholder for shorten functionality
+            setTimeout(() => {
+                resultDiv.textContent = 'This is where the shortened text will appear.';
+            }, 500);
         });
     </script>
 </body>

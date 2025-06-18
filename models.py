@@ -31,7 +31,7 @@ def translate_text_gemini(text):
     response = client.models.generate_content(
         model=modelname,
         config=types.GenerateContentConfig(
-        temperature=0.3
+        temperature=1
         ) , 
         contents=prompt_content+'\n -- \n'+text 
     )
