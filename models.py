@@ -27,7 +27,7 @@ from env import gemini_key
 
 def translate_text_gemini(text):
     client = genai.Client(api_key=gemini_key)
-    modelname="gemini-2.5-flash-preview-05-20" #gemini-2.5-pro-preview-06-05，gemini-2.5-flash-preview-05-20
+    modelname="gemini-2.5-pro" #gemini-2.5-pro-preview-06-05，gemini-2.5-flash-preview-05-20
     # print(f'{modelname} is used')
     response = client.models.generate_content(
         model=modelname,
@@ -40,7 +40,7 @@ def translate_text_gemini(text):
 
 def shorten_text_gemini(text):
     client = genai.Client(api_key=gemini_key)
-    modelname="gemini-2.5-flash-preview-05-20" 
+    modelname="gemini-2.5-pro" 
     response = client.models.generate_content(
         model=modelname,
         config=types.GenerateContentConfig(
